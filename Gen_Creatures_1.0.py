@@ -47,6 +47,11 @@ def gen_name(prnt):
 Creature = namedtuple('Creature', ['Name', 'Id', 'Bodyparts', 'Strengths'])
 def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_appendage_str, max_appendage_str,max_appendage, min_phalange_str, max_phalange_str, max_phalange):
     creature_id = 0
+    w = Canvas(Tk(), width=1600, height=900, background= "black")
+    w.pack()
+    mover = 100
+    body_x_anchor = -50
+    body_y_anchor = 50
     for i in range(creature_number):
         gen_name(0)
         creature_id += 1
@@ -55,6 +60,11 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
         phalange_color_avg = []
         limb_list = []
         limb_str_list = []
+        if body_x_anchor < 1600 - mover:
+            body_x_anchor += mover
+        else:
+            body_y_anchor += mover
+            body_x_anchor = 50
         avail_limb_pos = range(1, max_limb + 1)
         for i in range(random.randint(1,max_limb)):
             str = random.randint(min_phalange_str, max_phalange_str)
@@ -65,6 +75,15 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
             limb_color_avg.append(str + 155)
             appendage_list= []
             appendage_str_list = []
+            limb_stepper = 0
+            appendage_stepper = 0
+            phalange_stepper = 0
+            limb_distance = 100/4
+            appendage_distance = 50/4
+            phalange_distance = 20/4
+            limb_width = 12/4
+            appendage_width = 6/4
+            phalange_width = 3/4
             avail_appendage_pos = range(1, max_appendage + 1)
             for i in range(random.randint(1, max_appendage)):
                 str = random.randint(min_phalange_str, max_phalange_str)
@@ -88,19 +107,6 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
             limb_list.append(appendage_list)
             limb_str_list.append(appendage_str_list)
         print (Creature(NAME, creature_id, limb_list, limb_str_list))
-        w = Canvas(Tk(), width=500, height=400)
-        w.pack()
-        limb_stepper = 0
-        appendage_stepper = 0
-        phalange_stepper = 0
-        limb_distance = 100
-        appendage_distance = 50
-        phalange_distance = 20
-        limb_width = 12
-        appendage_width = 6
-        phalange_width = 3
-        body_x_anchor = 250
-        body_y_anchor = 200
         for i in range(len(limb_list)):
             if limb_stepper % 2 == 0 or limb_stepper == 0:
                 limb_angle = (45*limb_list[limb_stepper]) - 45
@@ -126,5 +132,5 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
                 appendage_stepper = 0
             limb_stepper += 1
         limb_stepper = 0
-        w.create_oval(260,210,240,190,fill= '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg)))), outline= '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg)))))
-        mainloop()
+        w.create_oval(body_x_anchor + limb_width, body_y_anchor + limb_width, body_x_anchor - limb_width, body_y_anchor - limb_width,fill= '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg)))), outline= '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg)))))
+    mainloop()
