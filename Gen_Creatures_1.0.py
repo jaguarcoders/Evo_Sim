@@ -2,7 +2,6 @@ import random
 from Tkinter import *
 import math
 from collections import namedtuple
-import matplotlib.colors as colors
 NAME = ''
 def gen_name(prnt):
     global NAME
