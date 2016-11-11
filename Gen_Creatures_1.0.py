@@ -47,7 +47,7 @@ def gen_name(prnt):
 Creature = namedtuple('Creature', ['Name', 'Id', 'Bodyparts', 'Strengths'])
 def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_appendage_str, max_appendage_str,max_appendage, min_phalange_str, max_phalange_str, max_phalange):
     creature_id = 0
-    w = Canvas(Tk(), width=1600, height=900, background= "black")
+    w = Canvas(Tk(), width= 1900, height= 1000, background= "black")
     w.pack()
     mover = 100
     body_x_anchor = -50
@@ -60,7 +60,7 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
         phalange_color_avg = []
         limb_list = []
         limb_str_list = []
-        if body_x_anchor < 1600 - mover:
+        if body_x_anchor < 1900 - mover:
             body_x_anchor += mover
         else:
             body_y_anchor += mover
