@@ -31,14 +31,37 @@ def gen_name(prnt):
                         else:
                             NAME += 'l'
                     else:
-                        NAME += random.choice(vowels)
+                        if random.randint(1,5) == 1:
+                            NAME += 'l'
+                        else:
+                            NAME += random.choice(vowels)
             else:        
-                NAME += 'h'
+                if random.randint(1,5) == 1:
+                    NAME += 'h'
+                else:
+                    if NAME[-1] in r_cons:
+                        if NAME[-1] in l_cons:
+                            if random.randint(1,5) == 1:
+                                NAME += 'l'
+                            else:
+                                NAME += random.choice(vowels)
+                        if random.randint(1,5) == 1:
+                            NAME += 'r'
+                        else:
+                            NAME += random.choice(vowels)
+                    else:
+                        if NAME[-1] in l_cons:
+                            if random.randint(1,5) == 1:
+                                NAME += 'l'
+                            else:
+                                NAME += random.choice(vowels)
         else:
             if NAME[-1] in ['eo']:
                 if NAME[-1] != NAME[-2]:
-                    if random.randint(1,3) == 1:
+                    if random.randint(1,5) == 1:
                         NAME += NAME[-1]
+                    else:
+                        NAME += random.choice(cons)
             else:
                 NAME += random.choice(cons)
     if prnt == 1:
@@ -46,9 +69,9 @@ def gen_name(prnt):
 Creature = namedtuple('Creature', ['Name', 'Id', 'Bodyparts', 'Strengths'])
 def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_appendage_str, max_appendage_str,max_appendage, min_phalange_str, max_phalange_str, max_phalange):
     creature_id = 0
-    w = Canvas(Tk(), width= 1900, height= 1000, background= "black")
-    w.pack()
     mover = 100
+    w = Canvas(Tk(), width= 1900, height= 1000,background= "black")
+    w.pack()
     body_x_anchor = -50
     body_y_anchor = 50
     for i in range(creature_number):
@@ -59,12 +82,21 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
         phalange_color_avg = []
         limb_list = []
         limb_str_list = []
+        limb_stepper = 0
+        appendage_stepper = 0
+        phalange_stepper = 0
+        limb_distance = 200/7
+        appendage_distance = 100/7
+        phalange_distance = 40/7
+        limb_width = 24/7
+        appendage_width = 12/7
+        phalange_width = 6/7
         if body_x_anchor < 1900 - mover:
             body_x_anchor += mover
         else:
-            body_y_anchor += mover
             body_x_anchor = 50
-        avail_limb_pos = range(1, max_limb + 1)
+            body_y_anchor += mover
+        avail_limb_pos = range(1, 9)
         for i in range(random.randint(1,max_limb)):
             str = random.randint(min_phalange_str, max_phalange_str)
             pos = random.choice(avail_limb_pos)
@@ -74,16 +106,7 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
             limb_color_avg.append(str + 155)
             appendage_list= []
             appendage_str_list = []
-            limb_stepper = 0
-            appendage_stepper = 0
-            phalange_stepper = 0
-            limb_distance = 100/4
-            appendage_distance = 50/4
-            phalange_distance = 20/4
-            limb_width = 12/4
-            appendage_width = 6/4
-            phalange_width = 3/4
-            avail_appendage_pos = range(1, max_appendage + 1)
+            avail_appendage_pos = range(1, 4)
             for i in range(random.randint(1, max_appendage)):
                 str = random.randint(min_phalange_str, max_phalange_str)
                 pos = random.choice(avail_appendage_pos)
@@ -109,26 +132,29 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
         for i in range(len(limb_list)):
             if limb_stepper % 2 == 0 or limb_stepper == 0:
                 limb_angle = (45*limb_list[limb_stepper]) - 45
-                limb_x_anchor = body_x_anchor + (limb_distance*(math.sin((math.pi/180)*limb_angle)))
-                limb_y_anchor = body_y_anchor + (limb_distance*(math.sin((math.pi/180)*(limb_angle - 90))))
+                limb_x_anchor = body_x_anchor + ((limb_distance)*(math.sin((math.pi/180)*limb_angle)))
+                limb_y_anchor = body_y_anchor + ((limb_distance)*(math.sin((math.pi/180)*(limb_angle - 90))))
                 w.create_line(body_x_anchor, body_y_anchor, limb_x_anchor, limb_y_anchor, width= limb_width, fill=  '#%02x%02x%02x' % (limb_str_list[limb_stepper] + 155, 0, 0))
             else:
                 for i in range(len(limb_list[limb_stepper])):
                     if appendage_stepper % 2 == 0 or appendage_stepper == 0:
-                        appendage_angle = limb_angle + ((45*limb_list[limb_stepper][appendage_stepper]) - 90)
+                        appendage_angle = ((45*limb_list[limb_stepper][appendage_stepper]) - 90) + limb_angle
                         appendage_x_anchor = limb_x_anchor + (appendage_distance*(math.sin((math.pi/180)*(appendage_angle))))
                         appendage_y_anchor = limb_y_anchor + (appendage_distance*(math.sin((math.pi/180)*(appendage_angle - 90))))
                         w.create_line(limb_x_anchor,limb_y_anchor,appendage_x_anchor,appendage_y_anchor,width= appendage_width, fill=  '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper] + 155, 0))
                     else:
                         for i in range(len(limb_list[limb_stepper][appendage_stepper])):
-                            phalange_angle = appendage_angle + ((45*limb_list[limb_stepper][appendage_stepper][phalange_stepper]) - 135)
+                            phalange_angle = ((45*limb_list[limb_stepper][appendage_stepper][phalange_stepper]) - 135) + appendage_angle
                             phalange_x_anchor = appendage_x_anchor + (phalange_distance*(math.sin((math.pi/180)*(phalange_angle))))
                             phalange_y_anchor = appendage_y_anchor + (phalange_distance*(math.sin((math.pi/180)*(phalange_angle - 90))))
-                            w.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= phalange_width, fill=  '#%02x%02x%02x' % (0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155))
+                            w.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= phalange_width, fill=  '#%02x%02x%02x' % ((0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155)))
+                            w.create_oval(phalange_x_anchor + (phalange_width/2) - 1, phalange_y_anchor + (phalange_width/2) - 1, phalange_x_anchor - (phalange_width/2) + 1, phalange_y_anchor - (phalange_width/2) + 1, fill=  '#%02x%02x%02x' % (0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155), outline= '#%02x%02x%02x' % (0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155))
                             phalange_stepper += 1
                         phalange_stepper = 0
+                        w.create_oval([appendage_x_anchor + (appendage_width/2)], [appendage_y_anchor + (appendage_width/2)], [appendage_x_anchor - (appendage_width/2)], [appendage_y_anchor - (appendage_width/2)], fill=  '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper - 1] + 155, 0), outline= '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper - 1] + 155, 0))
                     appendage_stepper += 1
                 appendage_stepper = 0
+                w.create_oval([limb_x_anchor + (limb_width/2)], [limb_y_anchor + (limb_width/2)], [limb_x_anchor - (limb_width/2)], [limb_y_anchor - (limb_width/2)], fill=  '#%02x%02x%02x' % (limb_str_list[limb_stepper - 1] + 155, 0, 0), outline= '#%02x%02x%02x' % (limb_str_list[limb_stepper - 1] + 155, 0, 0))
             limb_stepper += 1
         limb_stepper = 0
         w.create_oval(body_x_anchor + limb_width, body_y_anchor + limb_width, body_x_anchor - limb_width, body_y_anchor - limb_width,fill= '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg)))), outline= '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg)))))
