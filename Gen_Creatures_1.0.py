@@ -3,7 +3,7 @@ from Tkinter import *
 import math
 from collections import namedtuple
 NAME = ''
-def gen_name(prnt):
+def gen_name(prnt):     #Random Name Generator
     global NAME
     NAME = ''
     cons = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z','y']
@@ -91,13 +91,13 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
         limb_width = 24/7
         appendage_width = 12/7
         phalange_width = 6/7
-        if body_x_anchor < 1900 - mover:
+        if body_x_anchor < 1900 - mover:    # Changes x movement
             body_x_anchor += mover
-        else:
+        else:                               # Changes y movement
             body_x_anchor = 50
             body_y_anchor += mover
         avail_limb_pos = range(1, 9)
-        for i in range(random.randint(1,max_limb)):
+        for i in range(random.randint(1,max_limb)):     # Gathers Limb Positions and Limb Strengths
             str = random.randint(min_phalange_str, max_phalange_str)
             pos = random.choice(avail_limb_pos)
             avail_limb_pos.remove(pos)
@@ -107,7 +107,7 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
             appendage_list= []
             appendage_str_list = []
             avail_appendage_pos = range(1, 4)
-            for i in range(random.randint(1, max_appendage)):
+            for i in range(random.randint(1, max_appendage)):   # Gathers Appendage Positions and Appendage Strengths
                 str = random.randint(min_phalange_str, max_phalange_str)
                 pos = random.choice(avail_appendage_pos)
                 avail_appendage_pos.remove(pos)
@@ -117,17 +117,17 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
                 phalange_list = []
                 phalange_str_list = []
                 avail_phalange_pos = range(1, max_phalange + 1)
-                for i in range(random.randint(1, max_phalange)):
+                for i in range(random.randint(1, max_phalange)):    # Gathers Phalange Positions and Phalange Strengths
                     str = random.randint(min_phalange_str, max_phalange_str)
                     pos = random.choice(avail_phalange_pos)
                     avail_phalange_pos.remove(pos)
                     phalange_list.append(pos)
                     phalange_str_list.append(str)
                     phalange_color_avg.append(str + 155)
-                appendage_list.append(phalange_list)
-                appendage_str_list.append(phalange_str_list)
-            limb_list.append(appendage_list)
-            limb_str_list.append(appendage_str_list)
+                appendage_list.append(phalange_list)    # Adds phalanges inside of appendage list
+                appendage_str_list.append(phalange_str_list)    # Same for strengths
+            limb_list.append(appendage_list)    # Adds appendages and phalanges inside of limb list
+            limb_str_list.append(appendage_str_list)    # Same for strengths
         print (Creature(NAME, creature_id, limb_list, limb_str_list))
         for i in range(len(limb_list)):
             if limb_stepper % 2 == 0 or limb_stepper == 0:
@@ -148,7 +148,7 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
                             phalange_x_anchor = appendage_x_anchor + (phalange_distance*(math.sin((math.pi/180)*(phalange_angle))))
                             phalange_y_anchor = appendage_y_anchor + (phalange_distance*(math.sin((math.pi/180)*(phalange_angle - 90))))
                             w.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= phalange_width, fill=  '#%02x%02x%02x' % ((0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155)))
-                            w.create_oval(phalange_x_anchor + (phalange_width/2) - 1, phalange_y_anchor + (phalange_width/2) - 1, phalange_x_anchor - (phalange_width/2) + 1, phalange_y_anchor - (phalange_width/2) + 1, fill=  '#%02x%02x%02x' % (0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155), outline= '#%02x%02x%02x' % (0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155))
+                            w.create_oval(phalange_x_anchor + (phalange_width/2) - 1, phalange_y_anchor + (phalange_width/2) - 1, phalange_x_anchor - (phalange_width/2) + 1, phalange_y_anchor - (phalange_width/2) + 1, fill=  '#%02x%02x%02x' % (0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155))
                             phalange_stepper += 1
                         phalange_stepper = 0
                         w.create_oval([appendage_x_anchor + (appendage_width/2)], [appendage_y_anchor + (appendage_width/2)], [appendage_x_anchor - (appendage_width/2)], [appendage_y_anchor - (appendage_width/2)], fill=  '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper - 1] + 155, 0), outline= '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper - 1] + 155, 0))
@@ -157,5 +157,6 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
                 w.create_oval([limb_x_anchor + (limb_width/2)], [limb_y_anchor + (limb_width/2)], [limb_x_anchor - (limb_width/2)], [limb_y_anchor - (limb_width/2)], fill=  '#%02x%02x%02x' % (limb_str_list[limb_stepper - 1] + 155, 0, 0), outline= '#%02x%02x%02x' % (limb_str_list[limb_stepper - 1] + 155, 0, 0))
             limb_stepper += 1
         limb_stepper = 0
-        w.create_oval(body_x_anchor + limb_width, body_y_anchor + limb_width, body_x_anchor - limb_width, body_y_anchor - limb_width,fill= '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg)))), outline= '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg)))))
+        avg_color = '#%02x%02x%02x' % ((sum(limb_color_avg)/(len(limb_color_avg))), (sum(appendage_color_avg)/(len(appendage_color_avg))), (sum(phalange_color_avg)/(len(phalange_color_avg))))
+        w.create_oval(body_x_anchor + limb_width, body_y_anchor + limb_width, body_x_anchor - limb_width, body_y_anchor - limb_width, fill= avg_color, outline= avg_color)
     mainloop()
