@@ -134,24 +134,26 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
                 limb_angle = (45*limb_list[limb_stepper]) - 45
                 limb_x_anchor = body_x_anchor + ((limb_distance)*(math.sin((math.pi/180)*limb_angle)))
                 limb_y_anchor = body_y_anchor + ((limb_distance)*(math.sin((math.pi/180)*(limb_angle - 90))))
-                w.create_line(body_x_anchor, body_y_anchor, limb_x_anchor, limb_y_anchor, width= limb_width, fill=  '#%02x%02x%02x' % (limb_str_list[limb_stepper] + 155, 0, 0))
+                limb_color = '#%02x%02x%02x' % (limb_str_list[limb_stepper] + 155, 0, 0)
+                w.create_line(body_x_anchor, body_y_anchor, limb_x_anchor, limb_y_anchor, width= limb_width, fill= limb_color)
             else:
                 for i in range(len(limb_list[limb_stepper])):
                     if appendage_stepper % 2 == 0 or appendage_stepper == 0:
                         appendage_angle = ((45*limb_list[limb_stepper][appendage_stepper]) - 90) + limb_angle
                         appendage_x_anchor = limb_x_anchor + (appendage_distance*(math.sin((math.pi/180)*(appendage_angle))))
                         appendage_y_anchor = limb_y_anchor + (appendage_distance*(math.sin((math.pi/180)*(appendage_angle - 90))))
-                        w.create_line(limb_x_anchor,limb_y_anchor,appendage_x_anchor,appendage_y_anchor,width= appendage_width, fill=  '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper] + 155, 0))
+                        appendage_color = '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper] + 155, 0)
+                        w.create_line(limb_x_anchor,limb_y_anchor,appendage_x_anchor,appendage_y_anchor,width= appendage_width, fill= appendage_color)
                     else:
                         for i in range(len(limb_list[limb_stepper][appendage_stepper])):
                             phalange_angle = ((45*limb_list[limb_stepper][appendage_stepper][phalange_stepper]) - 135) + appendage_angle
                             phalange_x_anchor = appendage_x_anchor + (phalange_distance*(math.sin((math.pi/180)*(phalange_angle))))
                             phalange_y_anchor = appendage_y_anchor + (phalange_distance*(math.sin((math.pi/180)*(phalange_angle - 90))))
                             w.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= phalange_width, fill=  '#%02x%02x%02x' % ((0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155)))
-                            w.create_oval(phalange_x_anchor + (phalange_width/2) - 1, phalange_y_anchor + (phalange_width/2) - 1, phalange_x_anchor - (phalange_width/2) + 1, phalange_y_anchor - (phalange_width/2) + 1, fill=  '#%02x%02x%02x' % (0, 0, limb_str_list[limb_stepper][appendage_stepper][phalange_stepper] + 155))
+                            w.create_oval(phalange_x_anchor + (phalange_width/2) - 1, phalange_y_anchor + (phalange_width/2) - 1, phalange_x_anchor - (phalange_width/2) + 1, phalange_y_anchor - (phalange_width/2) + 1, fill= appendage_color, outline= appendage_color)
                             phalange_stepper += 1
                         phalange_stepper = 0
-                        w.create_oval([appendage_x_anchor + (appendage_width/2)], [appendage_y_anchor + (appendage_width/2)], [appendage_x_anchor - (appendage_width/2)], [appendage_y_anchor - (appendage_width/2)], fill=  '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper - 1] + 155, 0), outline= '#%02x%02x%02x' % (0, limb_str_list[limb_stepper][appendage_stepper - 1] + 155, 0))
+                        w.create_oval([appendage_x_anchor + (appendage_width/2)], [appendage_y_anchor + (appendage_width/2)], [appendage_x_anchor - (appendage_width/2)], [appendage_y_anchor - (appendage_width/2)], fill= limb_color, outline= limb_color)
                     appendage_stepper += 1
                 appendage_stepper = 0
                 w.create_oval([limb_x_anchor + (limb_width/2)], [limb_y_anchor + (limb_width/2)], [limb_x_anchor - (limb_width/2)], [limb_y_anchor - (limb_width/2)], fill=  '#%02x%02x%02x' % (limb_str_list[limb_stepper - 1] + 155, 0, 0), outline= '#%02x%02x%02x' % (limb_str_list[limb_stepper - 1] + 155, 0, 0))
