@@ -107,21 +107,23 @@ Creature = namedtuple('Creature', ['Name', 'Id', 'Bodyparts', 'Strengths'])
 def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_appendage_str, max_appendage_str,max_appendage, min_phalange_str, max_phalange_str, max_phalange, prnt):
     root = tk.Tk()
     screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
+    screen_height = root.winfo_screenheight() - 50
     window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
     window.pack()
-    mover = 25
+    mover = (screen_width/25)
     if creature_number == 'max':
-        creature_number = int(screen_width/mover) * int(screen_height/mover) - 1
+        creature_number = int(screen_width/mover) * int(screen_height/mover)
+    elif creature_number < 0:
+        creature_number += int(screen_width/mover) * int(screen_height/mover)
     creature_id = 0
-    body_x_anchor = -25
-    body_y_anchor = 25
-    limb_distance = 100/7
-    appendage_distance = 50/10
-    phalange_distance = 20/10
-    limb_width = 12/10
-    appendage_width = 6/10
-    phalange_width = 3/10
+    body_x_anchor = mover*-.5
+    body_y_anchor = mover*.5
+    limb_distance = mover/4
+    appendage_distance = limb_distance/2
+    phalange_distance = limb_distance/5
+    limb_width = limb_distance/10
+    appendage_width = limb_width/2
+    phalange_width = appendage_width/2
     for i in range(creature_number):
         gen_name(0)
         creature_id += 1
@@ -131,10 +133,10 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
         limb_list = []
         limb_str_list = []
         avail_limb_pos = range(1, 9)
-        if body_x_anchor < screen_width - mover*2:    # Changes x movement
+        if body_x_anchor + mover + limb_distance + appendage_distance + phalange_distance < screen_width:    # Changes x movement
             body_x_anchor += mover
         else:                               # Changes y movement
-            body_x_anchor = 25
+            body_x_anchor = mover/2
             body_y_anchor += mover
         for i in range(random.randint(1,max_limb)):     # Gathers Limb Positions and Limb Strengths
             str = random.randint(min_phalange_str, max_phalange_str)
@@ -171,4 +173,3 @@ def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_
             print (Creature(NAME, creature_id, limb_list, limb_str_list))
         draw_creature(limb_list, limb_str_list, (limb_color_avg, appendage_color_avg, phalange_color_avg), (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width), (body_x_anchor, body_y_anchor), window)
     mainloop()
-    
