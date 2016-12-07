@@ -104,27 +104,35 @@ def draw_creature(bodypart_pos, bodypart_str, body_color, distances, width, body
     avg_color = '#%02x%02x%02x' % ((sum(body_color[0])/(len(body_color[0]))), (sum(body_color[1])/(len(body_color[1]))), (sum(body_color[2])/(len(body_color[2]))))
     window.create_oval(body_anchor[0] + width[0], body_anchor[1] + width[0], body_anchor[0] - width[0], body_anchor[1] - width[0], fill= avg_color, outline= avg_color)
 Creature = namedtuple('Creature', ['Name', 'Id', 'Bodyparts', 'Strengths'])
-def create_creatures(creature_number, min_limb_str, max_limb_str, max_limb, min_appendage_str, max_appendage_str,max_appendage, min_phalange_str, max_phalange_str, max_phalange, prnt):
+def create_creatures(creature_size, min_limb_str, max_limb_str, max_limb, min_appendage_str, max_appendage_str,max_appendage, min_phalange_str, max_phalange_str, max_phalange, prnt):
     root = tk.Tk()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight() - 50
     window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
     window.pack()
-    mover = (screen_width/25)
-    if creature_number == 'max':
-        creature_number = int(screen_width/mover) * int(screen_height/mover)
-    elif creature_number < 0:
-        creature_number += int(screen_width/mover) * int(screen_height/mover)
+    if creature_size == 'small':
+        creature_num = 1350
+        mover = (screen_width/50)
+    elif creature_size == 'medium':
+        creature_num = 325
+        mover = (screen_width/25)
+    else:
+        creature_num = 10
+        mover = (screen_width/5)
+    if creature_num == 'max':
+        creature_num = int(screen_width/mover) * int(screen_height/mover)
+    elif creature_num < 0:
+        creature_num += int(screen_width/mover) * int(screen_height/mover)
     creature_id = 0
     body_x_anchor = mover*-.5
     body_y_anchor = mover*.5
     limb_distance = mover/4
     appendage_distance = limb_distance/2
-    phalange_distance = limb_distance/5
+    phalange_distance = limb_distance/6
     limb_width = limb_distance/10
     appendage_width = limb_width/2
     phalange_width = appendage_width/2
-    for i in range(creature_number):
+    for i in range(creature_num):
         gen_name(0)
         creature_id += 1
         limb_color_avg = []
