@@ -3,9 +3,8 @@ from Tkinter import *
 import Tkinter as tk
 import math
 from collections import namedtuple
-NAME = ''
-def gen_name(prnt):     #Random Name Generator
-    global NAME
+
+def gen_name():     #Random Name Generator
     NAME = ''
     cons = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z','y']
     h_cons = ['c','t','s','p']
@@ -65,8 +64,8 @@ def gen_name(prnt):     #Random Name Generator
                         NAME += random.choice(cons)
             else:
                 NAME += random.choice(cons)
-    if prnt == 1:
-        print NAME
+    return NAME
+
 def draw_creature(bodypart_pos, bodypart_str, body_color, distances, width, body_anchor, window):
     limb_stepper = 0
     appendage_stepper = 0
@@ -103,26 +102,59 @@ def draw_creature(bodypart_pos, bodypart_str, body_color, distances, width, body
             limb_stepper += 1
     avg_color = '#%02x%02x%02x' % ((sum(body_color[0])/(len(body_color[0]))), (sum(body_color[1])/(len(body_color[1]))), (sum(body_color[2])/(len(body_color[2]))))
     window.create_oval(body_anchor[0] + width[0], body_anchor[1] + width[0], body_anchor[0] - width[0], body_anchor[1] - width[0], fill= avg_color, outline= avg_color)
+
 Creature = namedtuple('Creature', ['Name', 'Id', 'Bodyparts', 'Strengths'])
-def create_creatures(creature_size, min_limb_str, max_limb_str, max_limb, min_appendage_str, max_appendage_str,max_appendage, min_phalange_str, max_phalange_str, max_phalange, prnt):
+
+def collect_creature_number():
+    try:
+        creatures = raw_input('Do you want creature size or creature number?')
+        if creatures == 'size' or creatures == 'creature size':
+            creature_size = raw_input('What size, S, M, or L?')
+            if creature_size == 'S':
+                creature_num = 1350
+            elif creature_size == 'M':
+                creature_num = 325
+            elif creature_size == 'L':
+                creature_num = 10
+            else:
+                print ('That was not a value from the list, value will be selected for you.')
+                creature_num = random.choice(1350,325,10)
+        elif creatures == 'number' or creatures == 'creature number':
+            creature_number = int(raw_input('How many do you want?'))
+            if creature_number < 0:
+                print ('Your number needs to be greater than one, randomly selecting creature number')
+                creature_num = random.randint(10,1350)
+    except:
+        print ('There has been an error in your input, values will be randomly generated for you')
+        creature_num = random.randint(10,1350)
+    return creature_num
+
+def collect_limb_values():
+    try:
+        min_limb_str = int(raw_input('Select a number between 1 and 100 for the minimum limb strength.'))
+    except:
+        print ('There has been an error in your input, values will be randomly generated for you')
+        min_limb_str = random.randint(1,100)
+        max_limb_str = random.randint(min_limb_str,100)
+        min_limb = random.randint(1,8)
+        max_limb = random.randint(min_limb,8)
+
+def create_creatures(creature_size, min_limb_str, max_limb_str, min_limb, max_limb, min_appendage_str, max_appendage_str, min_appendage, max_appendage, min_phalange_str, max_phalange_str, max_phalange, max_phalange, prnt):
     root = tk.Tk()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight() - 50
     window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
     window.pack()
-    if creature_size == 'small':
-        creature_num = 1350
-        mover = (screen_width/50)
-    elif creature_size == 'medium':
-        creature_num = 325
-        mover = (screen_width/25)
-    else:
-        creature_num = 10
-        mover = (screen_width/5)
-    if creature_num == 'max':
-        creature_num = int(screen_width/mover) * int(screen_height/mover)
-    elif creature_num < 0:
-        creature_num += int(screen_width/mover) * int(screen_height/mover)
+    collect_creature_number()
+    collect_limb_values()
+    collect_appendage_values()
+    collect_phalange_values()
+    try:
+        prnt = int(raw_input('Do you want to see body part values? 1 for yes, 0 for no.'))
+    except:
+        print ('Unknown error, values will not be given')
+        prnt = 0
+    mover = screen_width/(-16.82583717 + (8.53116841(math.log(creature_number))))
     creature_id = 0
     body_x_anchor = mover*-.5
     body_y_anchor = mover*.5
