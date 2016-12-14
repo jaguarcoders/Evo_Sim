@@ -4,6 +4,7 @@ import Tkinter as tk
 import math
 from collections import namedtuple
 
+
 def gen_name():     #Random Name Generator
     NAME = ''
     cons = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z','y']
@@ -66,6 +67,7 @@ def gen_name():     #Random Name Generator
                 NAME += random.choice(cons)
     return NAME
 
+
 def draw_creature(bodypart_pos, bodypart_str, body_color, distances, width, body_anchor, window):
     limb_stepper = 0
     appendage_stepper = 0
@@ -105,11 +107,12 @@ def draw_creature(bodypart_pos, bodypart_str, body_color, distances, width, body
 
 Creature = namedtuple('Creature', ['Name', 'Id', 'Bodyparts', 'Strengths'])
 
+
 def collect_creature_number():
     try:
-        creatures = raw_input('Do you want creature size or creature number?')
+        creatures = raw_input('Do you want creature size or creature number? ')
         if creatures == 'size' or creatures == 'creature size':
-            creature_size = raw_input('What size, S, M, or L?')
+            creature_size = raw_input('What size, S, M, or L? ')
             if creature_size == 'S':
                 creature_num = 1350
             elif creature_size == 'M':
@@ -117,11 +120,11 @@ def collect_creature_number():
             elif creature_size == 'L':
                 creature_num = 10
             else:
-                print ('That was not a value from the list, value will be selected for you.')
-                creature_num = random.choice(1350,325,10)
+                print ('That was not a value from the list, value will be selected for you. ')
+                creature_num = random.randint(1,1350)
         elif creatures == 'number' or creatures == 'creature number':
-            creature_number = int(raw_input('How many do you want?'))
-            if creature_number < 0:
+            creature_num = int(raw_input('How many do you want? '))
+            if creature_num < 0:
                 print ('Your number needs to be greater than one, randomly selecting creature number')
                 creature_num = random.randint(10,1350)
     except:
@@ -129,32 +132,131 @@ def collect_creature_number():
         creature_num = random.randint(10,1350)
     return creature_num
 
+
 def collect_limb_values():
     try:
-        min_limb_str = int(raw_input('Select a number between 1 and 100 for the minimum limb strength.'))
+        min_limb_str = int(input('Select a number between 1 and 100 for the minimum limb strength. '))
+        max_limb_str = int(raw_input('Select a number between ' + min_limb_str + ' and 100 for the maximum limb strength. '))
+        if max_limb_str < min_limb_str:
+            setter = min_limb_str
+            min_limb_str = max_limb_str
+            max_limb_str = setter
+        if min_limb_str < 0 or max_limb_str > 100:
+            print('There has been an error in your input, values will be randomly generated for you')
+            min_limb_str = random.randint(1,100)
+            max_limb_str = random.randint(min_limb_str,100)
+        min_limb = int(raw_input('Select a number between 1 and 8 for the minimum number of limbs. '))
+        max_limb_str = int(raw_input('Select a number between ' + min_limb_str + ' and 8 for the maximum number of limbs. '))
+        if max_limb < min_limb:
+            setter = min_limb
+            min_limb = max_limb
+            max_limb = setter
+        if min_limb < 0 or max_limb > 8:
+            print('There has been an error in your input, values will be randomly generated for you')
+            min_limb_str = random.randint(1,8)
+            max_limb_str = random.randint(min_limb_str,8)
     except:
         print ('There has been an error in your input, values will be randomly generated for you')
         min_limb_str = random.randint(1,100)
         max_limb_str = random.randint(min_limb_str,100)
         min_limb = random.randint(1,8)
         max_limb = random.randint(min_limb,8)
+    limb_values = [min_limb_str, max_limb_str, min_limb, max_limb]
+    return limb_values
 
-def create_creatures(creature_size, min_limb_str, max_limb_str, min_limb, max_limb, min_appendage_str, max_appendage_str, min_appendage, max_appendage, min_phalange_str, max_phalange_str, max_phalange, max_phalange, prnt):
+
+def collect_appendage_values():
+    try:
+        min_appendage_str = int(raw_input('Select a number between 1 and 100 for the minimum appendage strength. '))
+        max_appendage_str = int(raw_input('Select a number between ' + min_appendage_str + ' and 100 for the maximum appendage strength. '))
+        if max_appendage_str < min_appendage_str:
+            setter = min_appendage_str
+            min_appendage_str = max_appendage_str
+            max_appendage_str = setter
+        if min_appendage_str < 0 or max_appendage_str > 100:
+            print('There has been an error in your input, values will be randomly generated for you')
+            min_appendage_str = random.randint(1,100)
+            max_appendage_str = random.randint(min_appendage_str,100)
+        min_appendage = int(raw_input('Select a number between 1 and 3 for the minimum number of appendages. '))
+        max_appendage_str = int(raw_input('Select a number between ' + min_appendage_str + ' and 8 for the maximum number of appendages. '))
+        if max_appendage < min_appendage:
+            setter = min_appendage
+            min_appendage = max_appendage
+            max_appendage = setter
+        if min_appendage < 0 or max_appendage > 3:
+            print('There has been an error in your input, values will be randomly generated for you')
+            min_appendage_str = random.randint(1,3)
+            max_appendage_str = random.randint(min_limb_str,3)
+    except:
+        print ('There has been an error in your input, values will be randomly generated for you')
+        min_appendage_str = random.randint(1,100)
+        max_appendage_str = random.randint(min_appendage_str,100)
+        min_appendage = random.randint(1,8)
+        max_appendage = random.randint(min_appendage,8)
+    appendage_values = [min_appendage_str, max_appendage_str, max_appendage, min_appendage]
+    return appendage_values
+    
+
+def collect_phalange_values():
+    try:
+        min_phalange_str = int(raw_input('Select a number between 1 and 100 for the minimum phalange strength.'))
+        max_phalange_str = int(raw_input('Select a number between ' + min_phalange_str + ' and 100 for the maximum phalange strength.'))
+        if max_phalange_str < min_phalange_str:
+            setter = min_phalange_str
+            min_phalange_str = max_phalange_str
+            max_phalange_str = setter
+        if min_phalange_str < 0 or max_phalange_str > 100:
+            print('There has been an error in your input, values will be randomly generated for you')
+            min_phalange_str = random.randint(1,100)
+            max_phalange_str = random.randint(min_phalange_str,100)
+        min_phalange = int(raw_input('Select a number between 1 and 5 for the minimum number of phalanges.'))
+        max_phalange_str = int(raw_input('Select a number between ' + min_phalange_str + ' and 5 for the maximum number of phalanges.'))
+        if max_phalange < min_phalange:
+            setter = min_phalange
+            min_phalange = max_phalange
+            max_phalange = setter
+        if min_phalange < 0 or max_phalange > 8:
+            print('There has been an error in your input, values will be randomly generated for you')
+            min_phalange_str = random.randint(1,8)
+            max_phalange_str = random.randint(min_phalange_str,8)
+    except:
+        print ('There has been an error in your input, values will be randomly generated for you')
+        min_phalange_str = random.randint(1,100)
+        max_phalange_str = random.randint(min_phalange_str,100)
+        min_phalange = random.randint(1,8)
+        max_phalange = random.randint(min_phalange,8)
+    phalange_values = [min_phalange_str, max_phalange_str, min_phalange, max_phalange]
+    return phalange_values
+    
+    
+def create_creatures():
     root = tk.Tk()
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight() - 50
     window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
     window.pack()
-    collect_creature_number()
-    collect_limb_values()
-    collect_appendage_values()
-    collect_phalange_values()
+    creature_num = collect_creature_number()
+    limb_values = collect_limb_values()
+    min_limb_str = limb_values[0]
+    max_limb_str = limb_values[1]
+    min_limb = limb_values[2]
+    max_limb = limb_values[3]
+    appendage_values = collect_appendage_values()
+    min_appendage_str = appendage_values[0]
+    max_appendage_str = appendage_values[1]
+    min_appendage = appendage_values[2]
+    max_appendage = appendage_values[3]
+    phalange_values = collect_phalange_values()
+    min_phalange_str = phalange_values[0]
+    max_phalange_str = phalange_values[1]
+    min_phalange = phalange_values[2]
+    max_phalange = phalange_values[3]
     try:
         prnt = int(raw_input('Do you want to see body part values? 1 for yes, 0 for no.'))
     except:
         print ('Unknown error, values will not be given')
         prnt = 0
-    mover = screen_width/(-16.82583717 + (8.53116841(math.log(creature_number))))
+    mover = screen_width/(-16.82583717 + (8.53116841(math.log(creature_num))))
     creature_id = 0
     body_x_anchor = mover*-.5
     body_y_anchor = mover*.5
@@ -172,14 +274,14 @@ def create_creatures(creature_size, min_limb_str, max_limb_str, min_limb, max_li
         phalange_color_avg = []
         limb_list = []
         limb_str_list = []
-        avail_limb_pos = range(1, 9)
+        avail_limb_pos = range(min_limb, max_limb + 1)
         if body_x_anchor + mover + limb_distance + appendage_distance + phalange_distance < screen_width:    # Changes x movement
             body_x_anchor += mover
         else:                               # Changes y movement
             body_x_anchor = mover/2
             body_y_anchor += mover
-        for i in range(random.randint(1,max_limb)):     # Gathers Limb Positions and Limb Strengths
-            str = random.randint(min_phalange_str, max_phalange_str)
+        for i in range(random.randint(min_limb,max_limb)):     # Gathers Limb Positions and Limb Strengths
+            str = random.randint(min_limb_str, max_limb_str)
             pos = random.choice(avail_limb_pos)
             avail_limb_pos.remove(pos)
             limb_list.append(pos)
@@ -187,9 +289,9 @@ def create_creatures(creature_size, min_limb_str, max_limb_str, min_limb, max_li
             limb_color_avg.append(str + 155)
             appendage_list= []
             appendage_str_list = []
-            avail_appendage_pos = range(1, 4)
-            for i in range(random.randint(1, max_appendage)):   # Gathers Appendage Positions and Appendage Strengths
-                str = random.randint(min_phalange_str, max_phalange_str)
+            avail_appendage_pos = range(min_appendage, max_appendage + 1)
+            for i in range(random.randint(min_appendage, max_appendage)):   # Gathers Appendage Positions and Appendage Strengths
+                str = random.randint(min_appendage_str, max_appendage_str)
                 pos = random.choice(avail_appendage_pos)
                 avail_appendage_pos.remove(pos)
                 appendage_list.append(pos)
@@ -197,8 +299,8 @@ def create_creatures(creature_size, min_limb_str, max_limb_str, min_limb, max_li
                 appendage_color_avg.append(str + 155)
                 phalange_list = []
                 phalange_str_list = []
-                avail_phalange_pos = range(1, max_phalange + 1)
-                for i in range(random.randint(1, max_phalange)):    # Gathers Phalange Positions and Phalange Strengths
+                avail_phalange_pos = range(min_phalange, max_phalange + 1)
+                for i in range(random.randint(min_phalange, max_phalange)):    # Gathers Phalange Positions and Phalange Strengths
                     str = random.randint(min_phalange_str, max_phalange_str)
                     pos = random.choice(avail_phalange_pos)
                     avail_phalange_pos.remove(pos)
