@@ -6,7 +6,7 @@ from collections import namedtuple
 
 
 def gen_name():     #Random Name Generator
-    NAME = ''
+    name = ''
     cons = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z','y']
     h_cons = ['c','t','s','p']
     l_cons = ['c','b','f','g','p','s']
@@ -16,56 +16,56 @@ def gen_name():     #Random Name Generator
         letter = random.choice(vowels)
     else:
         letter = random.choice(cons)
-    NAME += letter
+    name += letter
     for i in range(random.randint(4,7)):
-        if NAME[-1] not in vowels:
-            if NAME[-1] not in h_cons:
-                if NAME[-1] not in l_cons:
-                    if NAME[-1] not in r_cons:
-                        NAME += random.choice(vowels)
+        if name[-1] not in vowels:
+            if name[-1] not in h_cons:
+                if name[-1] not in l_cons:
+                    if name[-1] not in r_cons:
+                        name += random.choice(vowels)
                     else:
-                        NAME += 'r'
+                        name += 'r'
                 else:
-                    if NAME[-1] in r_cons:
+                    if name[-1] in r_cons:
                         if random.randint(1,5) == 1:
-                            NAME += 'r'
+                            name += 'r'
                         else:
-                            NAME += 'l'
+                            name += 'l'
                     else:
                         if random.randint(1,5) == 1:
-                            NAME += 'l'
+                            name += 'l'
                         else:
-                            NAME += random.choice(vowels)
+                            name += random.choice(vowels)
             else:        
                 if random.randint(1,5) == 1:
-                    NAME += 'h'
+                    name += 'h'
                 else:
-                    if NAME[-1] in r_cons:
-                        if NAME[-1] in l_cons:
+                    if name[-1] in r_cons:
+                        if name[-1] in l_cons:
                             if random.randint(1,5) == 1:
-                                NAME += 'l'
+                                name += 'l'
                             else:
-                                NAME += random.choice(vowels)
+                                name += random.choice(vowels)
                         if random.randint(1,5) == 1:
-                            NAME += 'r'
+                            name += 'r'
                         else:
-                            NAME += random.choice(vowels)
+                            name += random.choice(vowels)
                     else:
-                        if NAME[-1] in l_cons:
+                        if name[-1] in l_cons:
                             if random.randint(1,5) == 1:
-                                NAME += 'l'
+                                name += 'l'
                             else:
-                                NAME += random.choice(vowels)
+                                name += random.choice(vowels)
         else:
-            if NAME[-1] in ['eo']:
-                if NAME[-1] != NAME[-2]:
+            if name[-1] in ['eo']:
+                if name[-1] != name[-2]:
                     if random.randint(1,5) == 1:
-                        NAME += NAME[-1]
+                        name += name[-1]
                     else:
-                        NAME += random.choice(cons)
+                        name += random.choice(cons)
             else:
-                NAME += random.choice(cons)
-    return NAME
+                name += random.choice(cons)
+    return name
 
 
 def draw_creature(bodypart_pos, bodypart_str, body_color, distances, width, body_anchor, window):
@@ -135,8 +135,8 @@ def collect_creature_number():
 
 def collect_limb_values():
     try:
-        min_limb_str = int(input('Select a number between 1 and 100 for the minimum limb strength. '))
-        max_limb_str = int(raw_input('Select a number between ' + min_limb_str + ' and 100 for the maximum limb strength. '))
+        min_limb_str = int(raw_input('Select a number between 1 and 100 for the minimum limb strength. '))
+        max_limb_str = int(raw_input('Select a number between ' + str(min_limb_str) + ' and 100 for the maximum limb strength. '))
         if max_limb_str < min_limb_str:
             setter = min_limb_str
             min_limb_str = max_limb_str
@@ -146,7 +146,7 @@ def collect_limb_values():
             min_limb_str = random.randint(1,100)
             max_limb_str = random.randint(min_limb_str,100)
         min_limb = int(raw_input('Select a number between 1 and 8 for the minimum number of limbs. '))
-        max_limb_str = int(raw_input('Select a number between ' + min_limb_str + ' and 8 for the maximum number of limbs. '))
+        max_limb_str = int(raw_input('Select a number between ' + str(min_limb_str) + ' and 8 for the maximum number of limbs. '))
         if max_limb < min_limb:
             setter = min_limb
             min_limb = max_limb
@@ -168,7 +168,7 @@ def collect_limb_values():
 def collect_appendage_values():
     try:
         min_appendage_str = int(raw_input('Select a number between 1 and 100 for the minimum appendage strength. '))
-        max_appendage_str = int(raw_input('Select a number between ' + min_appendage_str + ' and 100 for the maximum appendage strength. '))
+        max_appendage_str = int(raw_input('Select a number between ' + str(min_appendage_str) + ' and 100 for the maximum appendage strength. '))
         if max_appendage_str < min_appendage_str:
             setter = min_appendage_str
             min_appendage_str = max_appendage_str
@@ -178,7 +178,7 @@ def collect_appendage_values():
             min_appendage_str = random.randint(1,100)
             max_appendage_str = random.randint(min_appendage_str,100)
         min_appendage = int(raw_input('Select a number between 1 and 3 for the minimum number of appendages. '))
-        max_appendage_str = int(raw_input('Select a number between ' + min_appendage_str + ' and 8 for the maximum number of appendages. '))
+        max_appendage_str = int(raw_input('Select a number between ' + str(min_appendage_str) + ' and 8 for the maximum number of appendages. '))
         if max_appendage < min_appendage:
             setter = min_appendage
             min_appendage = max_appendage
@@ -191,16 +191,16 @@ def collect_appendage_values():
         print ('There has been an error in your input, values will be randomly generated for you')
         min_appendage_str = random.randint(1,100)
         max_appendage_str = random.randint(min_appendage_str,100)
-        min_appendage = random.randint(1,8)
-        max_appendage = random.randint(min_appendage,8)
-    appendage_values = [min_appendage_str, max_appendage_str, max_appendage, min_appendage]
+        min_appendage = random.randint(1,3)
+        max_appendage = random.randint(min_appendage,3)
+    appendage_values = [min_appendage_str, max_appendage_str, min_appendage, max_appendage]
     return appendage_values
     
 
 def collect_phalange_values():
     try:
         min_phalange_str = int(raw_input('Select a number between 1 and 100 for the minimum phalange strength.'))
-        max_phalange_str = int(raw_input('Select a number between ' + min_phalange_str + ' and 100 for the maximum phalange strength.'))
+        max_phalange_str = int(raw_input('Select a number between ' + str(min_phalange_str) + ' and 100 for the maximum phalange strength.'))
         if max_phalange_str < min_phalange_str:
             setter = min_phalange_str
             min_phalange_str = max_phalange_str
@@ -210,21 +210,21 @@ def collect_phalange_values():
             min_phalange_str = random.randint(1,100)
             max_phalange_str = random.randint(min_phalange_str,100)
         min_phalange = int(raw_input('Select a number between 1 and 5 for the minimum number of phalanges.'))
-        max_phalange_str = int(raw_input('Select a number between ' + min_phalange_str + ' and 5 for the maximum number of phalanges.'))
+        max_phalange_str = int(raw_input('Select a number between ' + str(min_phalange_str) + ' and 5 for the maximum number of phalanges.'))
         if max_phalange < min_phalange:
             setter = min_phalange
             min_phalange = max_phalange
             max_phalange = setter
-        if min_phalange < 0 or max_phalange > 8:
+        if min_phalange < 0 or max_phalange > 5:
             print('There has been an error in your input, values will be randomly generated for you')
-            min_phalange_str = random.randint(1,8)
-            max_phalange_str = random.randint(min_phalange_str,8)
+            min_phalange_str = random.randint(1,5)
+            max_phalange_str = random.randint(min_phalange_str,5)
     except:
         print ('There has been an error in your input, values will be randomly generated for you')
         min_phalange_str = random.randint(1,100)
         max_phalange_str = random.randint(min_phalange_str,100)
-        min_phalange = random.randint(1,8)
-        max_phalange = random.randint(min_phalange,8)
+        min_phalange = random.randint(1,5)
+        max_phalange = random.randint(min_phalange,5)
     phalange_values = [min_phalange_str, max_phalange_str, min_phalange, max_phalange]
     return phalange_values
     
@@ -256,8 +256,10 @@ def create_creatures():
     except:
         print ('Unknown error, values will not be given')
         prnt = 0
-    mover = screen_width/(-16.82583717 + (8.53116841(math.log(creature_num))))
+    print prnt
+    mover = screen_width/(-16.82583717 + (8.53116841*(math.log(creature_num))))
     creature_id = 0
+    print mover
     body_x_anchor = mover*-.5
     body_y_anchor = mover*.5
     limb_distance = mover/4
@@ -267,14 +269,14 @@ def create_creatures():
     appendage_width = limb_width/2
     phalange_width = appendage_width/2
     for i in range(creature_num):
-        gen_name(0)
+        name = gen_name()
         creature_id += 1
         limb_color_avg = []
         appendage_color_avg = []
         phalange_color_avg = []
         limb_list = []
         limb_str_list = []
-        avail_limb_pos = range(min_limb, max_limb + 1)
+        avail_limb_pos = range(1, 9)
         if body_x_anchor + mover + limb_distance + appendage_distance + phalange_distance < screen_width:    # Changes x movement
             body_x_anchor += mover
         else:                               # Changes y movement
@@ -289,7 +291,7 @@ def create_creatures():
             limb_color_avg.append(str + 155)
             appendage_list= []
             appendage_str_list = []
-            avail_appendage_pos = range(min_appendage, max_appendage + 1)
+            avail_appendage_pos = range(1, 4)
             for i in range(random.randint(min_appendage, max_appendage)):   # Gathers Appendage Positions and Appendage Strengths
                 str = random.randint(min_appendage_str, max_appendage_str)
                 pos = random.choice(avail_appendage_pos)
@@ -299,7 +301,7 @@ def create_creatures():
                 appendage_color_avg.append(str + 155)
                 phalange_list = []
                 phalange_str_list = []
-                avail_phalange_pos = range(min_phalange, max_phalange + 1)
+                avail_phalange_pos = range(1, 6)
                 for i in range(random.randint(min_phalange, max_phalange)):    # Gathers Phalange Positions and Phalange Strengths
                     str = random.randint(min_phalange_str, max_phalange_str)
                     pos = random.choice(avail_phalange_pos)
@@ -312,6 +314,6 @@ def create_creatures():
             limb_list.append(appendage_list)    # Adds appendages and phalanges inside of limb list
             limb_str_list.append(appendage_str_list)    # Same for strengths
         if prnt == 1:
-            print (Creature(NAME, creature_id, limb_list, limb_str_list))
+            print (Creature(name, creature_id, limb_list, limb_str_list))
         draw_creature(limb_list, limb_str_list, (limb_color_avg, appendage_color_avg, phalange_color_avg), (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width), (body_x_anchor, body_y_anchor), window)
     mainloop()
