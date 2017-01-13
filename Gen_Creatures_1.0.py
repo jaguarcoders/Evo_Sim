@@ -136,7 +136,7 @@ def collect_limb_values():
             min_limb_str = random.randint(1,100)
             max_limb_str = random.randint(min_limb_str,100)
         min_limb = int(raw_input('Select a number between 1 and 8 for the minimum number of limbs. '))
-        max_limb_str = int(raw_input('Select a number between ' + str(min_limb_str) + ' and 8 for the maximum number of limbs. '))
+        max_limb = int(raw_input('Select a number between ' + str(min_limb) + ' and 8 for the maximum number of limbs. '))
         if max_limb < min_limb:
             setter = min_limb
             min_limb = max_limb
@@ -168,7 +168,7 @@ def collect_appendage_values():
             min_appendage_str = random.randint(1,100)
             max_appendage_str = random.randint(min_appendage_str,100)
         min_appendage = int(raw_input('Select a number between 1 and 3 for the minimum number of appendages. '))
-        max_appendage_str = int(raw_input('Select a number between ' + str(min_appendage_str) + ' and 8 for the maximum number of appendages. '))
+        max_appendage = int(raw_input('Select a number between ' + str(min_appendage) + ' and 3 for the maximum number of appendages. '))
         if max_appendage < min_appendage:
             setter = min_appendage
             min_appendage = max_appendage
@@ -200,7 +200,7 @@ def collect_phalange_values():
             min_phalange_str = random.randint(1,100)
             max_phalange_str = random.randint(min_phalange_str,100)
         min_phalange = int(raw_input('Select a number between 1 and 5 for the minimum number of phalanges.'))
-        max_phalange_str = int(raw_input('Select a number between ' + str(min_phalange_str) + ' and 5 for the maximum number of phalanges.'))
+        max_phalange = int(raw_input('Select a number between ' + str(min_phalange) + ' and 5 for the maximum number of phalanges.'))
         if max_phalange < min_phalange:
             setter = min_phalange
             min_phalange = max_phalange
@@ -303,6 +303,12 @@ def creature_creation():
 class Creature():
     
     def __init__(self):
+        print ('Welcome to the Creature Interface, commands can be found with Creature.help()')
+        
+    def help(self):'
+        print ('This is the help tab, list of commands and what they do can be found here')
+        
+    def somethingtobecalledsoon(self):
         root = tk.Tk()
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight() - 50
