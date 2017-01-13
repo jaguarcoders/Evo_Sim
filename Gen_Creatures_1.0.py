@@ -146,7 +146,7 @@ def collect_limb_values():
             min_limb_str = random.randint(1,100)
             max_limb_str = random.randint(min_limb_str,100)
         min_limb = int(raw_input('Select a number between 1 and 8 for the minimum number of limbs. '))
-        max_limb_str = int(raw_input('Select a number between ' + str(min_limb_str) + ' and 8 for the maximum number of limbs. '))
+        max_limb = int(raw_input('Select a number between ' + str(min_limb) + ' and 8 for the maximum number of limbs. '))
         if max_limb < min_limb:
             setter = min_limb
             min_limb = max_limb
@@ -178,15 +178,15 @@ def collect_appendage_values():
             min_appendage_str = random.randint(1,100)
             max_appendage_str = random.randint(min_appendage_str,100)
         min_appendage = int(raw_input('Select a number between 1 and 3 for the minimum number of appendages. '))
-        max_appendage_str = int(raw_input('Select a number between ' + str(min_appendage_str) + ' and 8 for the maximum number of appendages. '))
+        max_appendage = int(raw_input('Select a number between ' + str(min_appendage) + ' and 8 for the maximum number of appendages. '))
         if max_appendage < min_appendage:
             setter = min_appendage
             min_appendage = max_appendage
             max_appendage = setter
         if min_appendage < 0 or max_appendage > 3:
             print('There has been an error in your input, values will be randomly generated for you')
-            min_appendage_str = random.randint(1,3)
-            max_appendage_str = random.randint(min_limb_str,3)
+            min_appendage = random.randint(1,3)
+            max_appendage = random.randint(min_limb_str,3)
     except:
         print ('There has been an error in your input, values will be randomly generated for you')
         min_appendage_str = random.randint(1,100)
@@ -210,15 +210,15 @@ def collect_phalange_values():
             min_phalange_str = random.randint(1,100)
             max_phalange_str = random.randint(min_phalange_str,100)
         min_phalange = int(raw_input('Select a number between 1 and 5 for the minimum number of phalanges.'))
-        max_phalange_str = int(raw_input('Select a number between ' + str(min_phalange_str) + ' and 5 for the maximum number of phalanges.'))
+        max_phalange = int(raw_input('Select a number between ' + str(min_phalange) + ' and 5 for the maximum number of phalanges.'))
         if max_phalange < min_phalange:
             setter = min_phalange
             min_phalange = max_phalange
             max_phalange = setter
         if min_phalange < 0 or max_phalange > 5:
             print('There has been an error in your input, values will be randomly generated for you')
-            min_phalange_str = random.randint(1,5)
-            max_phalange_str = random.randint(min_phalange_str,5)
+            min_phalange = random.randint(1,5)
+            max_phalange = random.randint(min_phalange_str,5)
     except:
         print ('There has been an error in your input, values will be randomly generated for you')
         min_phalange_str = random.randint(1,100)
