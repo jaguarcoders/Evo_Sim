@@ -57,7 +57,7 @@ def gen_name():     #Random Name Generator
                             else:
                                 name += random.choice(vowels)
         else:
-            if name[-1] in ['eo']:
+            if name[-1] in 'eo':
                 if name[-1] != name[-2]:
                     if random.randint(1,5) == 1:
                         name += name[-1]
@@ -220,11 +220,6 @@ def collect_phalange_values():
 
 
 def create_creatures():
-    root = tk.Tk()
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight() - 50
-    window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
-    window.pack()
     creature_num = collect_creature_number()
     limb_values = collect_limb_values()
     min_limb_str = limb_values[0]
@@ -241,24 +236,10 @@ def create_creatures():
     max_phalange_str = phalange_values[1]
     min_phalange = phalange_values[2]
     max_phalange = phalange_values[3]
-    try:
-        prnt = int(raw_input('Do you want to see body part values? 1 for yes, 0 for no.'))
-    except:
-        print ('Unknown error, values will not be given')
-        prnt = 0
-    mover = screen_width/(-16.82583717 + (8.53116841*(math.log(creature_num))))
-    body_x_anchor = mover*-.5
-    body_y_anchor = mover*.5
-    limb_distance = mover/4
-    appendage_distance = limb_distance/2
-    phalange_distance = limb_distance/6
-    limb_width = limb_distance/10
-    appendage_width = limb_width/2
-    phalange_width = appendage_width/2
-    return (min_limb_str, max_limb_str, min_limb, max_limb, min_appendage_str, max_appendage_str, min_appendage, max_appendage, min_phalange_str, max_phalange_str, min_phalange, max_phalange, prnt, mover, body_x_anchor, body_y_anchor, limb_distance, appendage_distance, phalange_distance, limb_width, appendage_width, phalange_width)
+    return (min_limb_str, max_limb_str, min_limb, max_limb, min_appendage_str, max_appendage_str, min_appendage, max_appendage, min_phalange_str, max_phalange_str, min_phalange, max_phalange)
 
 
-def creature_creation():
+def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_appendage_str, max_appendage_str, min_appendage, max_appendage, min_phalange_str, max_phalange_str, min_phalange, max_phalange):
     name = gen_name()
     limb_color_avg = []
     appendage_color_avg = []
@@ -305,10 +286,10 @@ class Creature():
     def __init__(self):
         print ('Welcome to the Creature Interface, commands can be found with Creature.help()')
         
-    def help(self):'
+    def help(self):
         print ('This is the help tab, list of commands and what they do can be found here')
         
-    def somethingtobecalledsoon(self):
+    def create(self):
         root = tk.Tk()
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight() - 50
@@ -323,8 +304,9 @@ class Creature():
         limb_width = limb_distance/10
         appendage_width = limb_width/2
         phalange_width = appendage_width/2
-        values = creature_creation()
+        max_min_values = create_creatures()
+        values = creature_creation(max_min_values[0], max_min_values[1], max_min_values[2], max_min_values[3], max_min_values[4], max_min_values[5], max_min_values[6], max_min_values[7], max_min_values[8], max_min_values[9], max_min_values[10], max_min_values[11],)
         name = values[0]
         limb_list = values[1]
         limb_str_list = values[2]
-        draw_creautre(limb_list, limb_str_list, (body_x_anchor, body_y_anchor), window)
+        draw_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window)
