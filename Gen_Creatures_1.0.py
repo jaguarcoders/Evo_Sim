@@ -104,23 +104,10 @@ def draw_creature(bodypart_pos, bodypart_str, distances, width, body_anchor, win
 
 def collect_creature_number():
     try:
-        creatures = raw_input('Do you want creature size or creature number? ')
-        if creatures == 'size' or creatures == 'creature size':
-            creature_size = raw_input('What size, S, M, or L? ')
-            if creature_size == 'S':
-                creature_num = 1350
-            elif creature_size == 'M':
-                creature_num = 325
-            elif creature_size == 'L':
-                creature_num = 10
-            else:
-                print ('That was not a value from the list, value will be selected for you. ')
-                creature_num = random.randint(1,1350)
-        elif creatures == 'number' or creatures == 'creature number':
-            creature_num = int(raw_input('How many do you want? '))
-            if creature_num < 0:
-                print ('Your number needs to be greater than one, randomly selecting creature number')
-                creature_num = random.randint(10,1350)
+        creature_num = int(raw_input('How many creatures do you want? '))
+        if creature_num < 0:
+            print ('Your number needs to be greater than one, randomly selecting creature number')
+            creature_num = random.randint(10,1350)
     except:
         print ('There has been an error in your input, values will be randomly generated for you')
         creature_num = random.randint(10,1350)
@@ -329,7 +316,7 @@ class Creature():
         window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
         window.pack()
         creature_number = collect_creature_number()
-        mover = screen_width/2
+        mover = screen_width/(creature_number*2)
         body_x_anchor = mover
         body_y_anchor = screen_height - mover
         limb_distance = mover/4
@@ -342,8 +329,15 @@ class Creature():
             max_min_values = create_creature()
         else:
             max_min_values = (0,100,1,8,0,100,1,3,0,100,1,5)
-        values = creature_creation(max_min_values[0], max_min_values[1], max_min_values[2], max_min_values[3], max_min_values[4], max_min_values[5], max_min_values[6], max_min_values[7], max_min_values[8], max_min_values[9], max_min_values[10], max_min_values[11],)
-        limb_list = values[1]
-        limb_str_list = values[2]
-        body_color = values[3]
-        draw_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window, body_color)
+        for i in range(creature_number):
+            if body_x_anchor + mover + limb_distance + appendage_distance + phalange_distance < screen_width:    # Changes x movement
+                body_x_anchor += mover
+            else:                               # Changes y movement
+                body_x_anchor = mover
+                body_y_anchor += mover
+            values = creature_creation(max_min_values[0], max_min_values[1], max_min_values[2], max_min_values[3], max_min_values[4], max_min_values[5], max_min_values[6], max_min_values[7], max_min_values[8], max_min_values[9], max_min_values[10], max_min_values[11],)
+            limb_list = values[1]
+            limb_str_list = values[2]
+            body_color = values[3]
+            draw_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window, body_color)
+        mainloop()
