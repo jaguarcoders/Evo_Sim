@@ -2,7 +2,6 @@ import random
 from Tkinter import *
 import Tkinter as tk
 import math
-from collections import namedtuple
 
 
 def gen_name():     #Random Name Generator
@@ -24,13 +23,18 @@ def gen_name():     #Random Name Generator
                     if name[-1] not in r_cons:
                         name += random.choice(vowels)
                     else:
-                        name += 'r'
+                        if random.randint(1,5) == 1:    
+                            name += 'r'
+                        else:
+                            name += random.choice(vowels)
                 else:
                     if name[-1] in r_cons:
                         if random.randint(1,5) == 1:
                             name += 'r'
-                        else:
+                        elif random.randint(1,5) == 1:
                             name += 'l'
+                        else:
+                            name += random.choice(vowels)
                     else:
                         if random.randint(1,5) == 1:
                             name += 'l'
@@ -68,7 +72,7 @@ def gen_name():     #Random Name Generator
     return name
 
 
-def draw_creature(bodypart_pos, bodypart_str, distances, width, body_anchor, window):
+def draw_creature(bodypart_pos, bodypart_str, distances, width, body_anchor, window, body_color):
     for limb_num in range(len(bodypart_pos)):
             if limb_num % 2 == 0 or limb_num == 0:
                 limb_angle = (45*bodypart_pos[limb_num]) - 45
@@ -96,7 +100,7 @@ def draw_creature(bodypart_pos, bodypart_str, distances, width, body_anchor, win
                 window.create_oval([limb_x_anchor + (width[0]/2)], [limb_y_anchor + (width[0]/2)], [limb_x_anchor - (width[0]/2)], [limb_y_anchor - (width[0]/2)], fill=  '#%02x%02x%02x' % (bodypart_str[limb_num - 1] + 155, 0, 0), outline= '#%02x%02x%02x' % (bodypart_str[limb_num - 1] + 155, 0, 0))
     avg_color = '#%02x%02x%02x' % ((sum(body_color[0])/(len(body_color[0]))), (sum(body_color[1])/(len(body_color[1]))), (sum(body_color[2])/(len(body_color[2]))))
     window.create_oval(body_anchor[0] + width[0], body_anchor[1] + width[0], body_anchor[0] - width[0], body_anchor[1] - width[0], fill= avg_color, outline= avg_color)
-
+    
 
 def collect_creature_number():
     try:
@@ -145,6 +149,8 @@ def collect_limb_values():
             print('There has been an error in your input, values will be randomly generated for you')
             min_limb_str = random.randint(1,8)
             max_limb_str = random.randint(min_limb_str,8)
+        if min_limb == max_limb or min_limb_str == max_limb_str:
+            pro
     except:
         print ('There has been an error in your input, values will be randomly generated for you')
         min_limb_str = random.randint(1,100)
@@ -219,8 +225,7 @@ def collect_phalange_values():
     return phalange_values
 
 
-def create_creatures():
-    creature_num = collect_creature_number()
+def create_creature():
     limb_values = collect_limb_values()
     min_limb_str = limb_values[0]
     max_limb_str = limb_values[1]
@@ -253,7 +258,7 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
         avail_limb_pos.remove(pos)
         limb_list.append(pos)
         limb_str_list.append(str)
-        limb_color_avg.append(str + 155)
+        limb_color_avg.append((.011 * (str**2)) + (.9*str) + 55)
         appendage_list= []
         appendage_str_list = []
         avail_appendage_pos = range(1, 4)
@@ -263,7 +268,7 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
             avail_appendage_pos.remove(pos)
             appendage_list.append(pos)
             appendage_str_list.append(str)
-            appendage_color_avg.append(str + 155)
+            appendage_color_avg.append((.011 * (str**2)) + (.9*str) + 55)
             phalange_list = []
             phalange_str_list = []
             avail_phalange_pos = range(1, 6)
@@ -273,12 +278,13 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
                 avail_phalange_pos.remove(pos)
                 phalange_list.append(pos)
                 phalange_str_list.append(str)
-                phalange_color_avg.append(str + 155)
+                phalange_color_avg.append((.011 * (str**2)) + (.9*str) + 55)
             appendage_list.append(phalange_list)    # Adds phalanges inside of appendage list
             appendage_str_list.append(phalange_str_list)    # Same for strengths
         limb_list.append(appendage_list)    # Adds appendages and phalanges inside of limb list
         limb_str_list.append(appendage_str_list)    # Same for strengths
-    return (name, limb_list, limb_str_list)
+    color_values = (limb_color_avg, appendage_color_avg, phalange_color_avg)
+    return (name, limb_list, limb_str_list, color_values)
             
             
 class Creature():
@@ -295,18 +301,49 @@ class Creature():
         screen_height = root.winfo_screenheight() - 50
         window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
         window.pack()
-        mover = screen_width/(5)
-        body_x_anchor = mover*-.5
-        body_y_anchor = mover*.5
+        mover = screen_width/2
+        body_x_anchor = screen_width /2
+        body_y_anchor = screen_height / 2
         limb_distance = mover/4
         appendage_distance = limb_distance/2
         phalange_distance = limb_distance/6
         limb_width = limb_distance/10
         appendage_width = limb_width/2
         phalange_width = appendage_width/2
-        max_min_values = create_creatures()
+        if raw_input('Would You Like To Customize Limits? ') == 'Yes':
+            max_min_values = create_creature()
+        else:
+            max_min_values = (0,100,1,8,0,100,1,3,0,100,1,5)
         values = creature_creation(max_min_values[0], max_min_values[1], max_min_values[2], max_min_values[3], max_min_values[4], max_min_values[5], max_min_values[6], max_min_values[7], max_min_values[8], max_min_values[9], max_min_values[10], max_min_values[11],)
-        name = values[0]
         limb_list = values[1]
         limb_str_list = values[2]
-        draw_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window)
+        body_color = values[3]
+        draw_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window, body_color)
+        mainloop()
+        
+        
+    def create_multiple(self):
+        root = tk.Tk()
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight() - 50
+        window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
+        window.pack()
+        creature_number = collect_creature_number()
+        mover = screen_width/2
+        body_x_anchor = mover
+        body_y_anchor = screen_height - mover
+        limb_distance = mover/4
+        appendage_distance = limb_distance/2
+        phalange_distance = limb_distance/6
+        limb_width = limb_distance/10
+        appendage_width = limb_width/2
+        phalange_width = appendage_width/2
+        if raw_input('Would You Like To Customize Limits? ') == 'Yes':
+            max_min_values = create_creature()
+        else:
+            max_min_values = (0,100,1,8,0,100,1,3,0,100,1,5)
+        values = creature_creation(max_min_values[0], max_min_values[1], max_min_values[2], max_min_values[3], max_min_values[4], max_min_values[5], max_min_values[6], max_min_values[7], max_min_values[8], max_min_values[9], max_min_values[10], max_min_values[11],)
+        limb_list = values[1]
+        limb_str_list = values[2]
+        body_color = values[3]
+        draw_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window, body_color)
