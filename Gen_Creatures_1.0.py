@@ -232,7 +232,6 @@ def create_creature():
 
 
 def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_appendage_str, max_appendage_str, min_appendage, max_appendage, min_phalange_str, max_phalange_str, min_phalange, max_phalange):
-    name = gen_name()
     limb_color_avg = []
     appendage_color_avg = []
     phalange_color_avg = []
@@ -245,7 +244,7 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
         avail_limb_pos.remove(pos)
         limb_list.append(pos)
         limb_str_list.append(str)
-        limb_color_avg.append((.011 * (str**2)) + (.9*str) + 55)
+        limb_color_avg.append((.011 * (str**2)) + (.9*str))
         appendage_list= []
         appendage_str_list = []
         avail_appendage_pos = range(1, 4)
@@ -255,7 +254,7 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
             avail_appendage_pos.remove(pos)
             appendage_list.append(pos)
             appendage_str_list.append(str)
-            appendage_color_avg.append((.011 * (str**2)) + (.9*str) + 55)
+            appendage_color_avg.append((.011 * (str**2)) + (.9*str))
             phalange_list = []
             phalange_str_list = []
             avail_phalange_pos = range(1, 6)
@@ -265,13 +264,13 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
                 avail_phalange_pos.remove(pos)
                 phalange_list.append(pos)
                 phalange_str_list.append(str)
-                phalange_color_avg.append((.011 * (str**2)) + (.9*str) + 55)
+                phalange_color_avg.append((.011 * (str**2)) + (.9*str))
             appendage_list.append(phalange_list)    # Adds phalanges inside of appendage list
             appendage_str_list.append(phalange_str_list)    # Same for strengths
         limb_list.append(appendage_list)    # Adds appendages and phalanges inside of limb list
         limb_str_list.append(appendage_str_list)    # Same for strengths
     color_values = (limb_color_avg, appendage_color_avg, phalange_color_avg)
-    return (name, limb_list, limb_str_list, color_values)
+    return (limb_list, limb_str_list, color_values)
             
             
 class Creature():
@@ -302,9 +301,9 @@ class Creature():
         else:
             max_min_values = (0,100,1,8,0,100,1,3,0,100,1,5)
         values = creature_creation(max_min_values[0], max_min_values[1], max_min_values[2], max_min_values[3], max_min_values[4], max_min_values[5], max_min_values[6], max_min_values[7], max_min_values[8], max_min_values[9], max_min_values[10], max_min_values[11],)
-        limb_list = values[1]
-        limb_str_list = values[2]
-        body_color = values[3]
+        limb_list = values[0]
+        limb_str_list = values[1]
+        body_color = values[2]
         draw_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window, body_color)
         mainloop()
         
