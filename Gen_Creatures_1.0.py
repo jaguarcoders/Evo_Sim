@@ -78,29 +78,66 @@ def draw_creature(bodypart_pos, bodypart_str, distances, width, body_anchor, win
                 limb_angle = (45*bodypart_pos[limb_num]) - 45
                 limb_x_anchor = body_anchor[0] + ((distances[0])*(math.sin((math.pi/180)*limb_angle)))
                 limb_y_anchor = body_anchor[1] + ((distances[0])*(math.sin((math.pi/180)*(limb_angle - 90))))
-                limb_color = '#%02x%02x%02x' % (bodypart_str[limb_num] + 155, 0, 0)
-                window.create_line(body_anchor[0], body_anchor[1], limb_x_anchor, limb_y_anchor, width= width[0], fill= limb_color)
+                limb_color = '#%02x%02x%02x' % (bodypart_str[limb_num] * 2 + 55, 0, 0)
+                window.create_line(body_anchor[0], body_anchor[1], limb_x_anchor, limb_y_anchor, width= width[0] + 1, fill= '#%02x%02x%02x' % (255,255,255))
+                window.create_line(body_anchor[0], body_anchor[1], limb_x_anchor, limb_y_anchor, width= width[0] + 1, fill= limb_color)
             else:
                 for appendage_num in range(len(bodypart_pos[limb_num])):
                     if appendage_num % 2 == 0 or appendage_num == 0:
                         appendage_angle = ((45*bodypart_pos[limb_num][appendage_num]) - 90) + limb_angle
                         appendage_x_anchor = limb_x_anchor + (distances[1]*(math.sin((math.pi/180)*(appendage_angle))))
                         appendage_y_anchor = limb_y_anchor + (distances[1]*(math.sin((math.pi/180)*(appendage_angle - 90))))
-                        appendage_color = '#%02x%02x%02x' % (0, bodypart_str[limb_num][appendage_num] + 155, 0)
-                        window.create_line(limb_x_anchor,limb_y_anchor,appendage_x_anchor,appendage_y_anchor,width= width[1], fill= appendage_color)
+                        appendage_color = '#%02x%02x%02x' % (0, bodypart_str[limb_num][appendage_num] * 2 + 55, 0)
+                        window.create_line(limb_x_anchor,limb_y_anchor,appendage_x_anchor,appendage_y_anchor,width= width[1] + 1, fill= '#%02x%02x%02x' % (255,255,255))
+                        window.create_line(limb_x_anchor,limb_y_anchor,appendage_x_anchor,appendage_y_anchor,width= width[1] + 1, fill= appendage_color)
                     else:
                         for phalange_num in range(len(bodypart_pos[limb_num][appendage_num])):
                             phalange_angle = ((45*bodypart_pos[limb_num][appendage_num][phalange_num]) - 135) + appendage_angle
                             phalange_x_anchor = appendage_x_anchor + (distances[2]*(math.sin((math.pi/180)*(phalange_angle))))
                             phalange_y_anchor = appendage_y_anchor + (distances[2]*(math.sin((math.pi/180)*(phalange_angle - 90))))
-                            phalange_color = '#%02x%02x%02x' % ((0, 0, bodypart_str[limb_num][appendage_num][phalange_num] + 155))
-                            window.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= width[2], fill= phalange_color)
+                            phalange_color = '#%02x%02x%02x' % ((0, 0, bodypart_str[limb_num][appendage_num][phalange_num] * 2 + 55))
+                            window.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= width[2] + 1, fill= '#%02x%02x%02x' % (255,255,255))
+                            window.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= width[2] + 1, fill= phalange_color)
                             window.create_oval(phalange_x_anchor + (width[2]/2) - 1, phalange_y_anchor + (width[2]/2) - 1, phalange_x_anchor - (width[2]/2) + 1, phalange_y_anchor - (width[2]/2) + 1, fill= phalange_color, outline= phalange_color)
                         window.create_oval([appendage_x_anchor + (width[1]/2)], [appendage_y_anchor + (width[1]/2)], [appendage_x_anchor - (width[1]/2)], [appendage_y_anchor - (width[1]/2)], fill= appendage_color, outline= appendage_color)
-                window.create_oval([limb_x_anchor + (width[0]/2)], [limb_y_anchor + (width[0]/2)], [limb_x_anchor - (width[0]/2)], [limb_y_anchor - (width[0]/2)], fill=  '#%02x%02x%02x' % (bodypart_str[limb_num - 1] + 155, 0, 0), outline= '#%02x%02x%02x' % (bodypart_str[limb_num - 1] + 155, 0, 0))
+                window.create_oval([limb_x_anchor + (width[0]/2)], [limb_y_anchor + (width[0]/2)], [limb_x_anchor - (width[0]/2)], [limb_y_anchor - (width[0]/2)], fill=  '#%02x%02x%02x' % (bodypart_str[limb_num - 1] * 2 + 55, 0, 0), outline= '#%02x%02x%02x' % (bodypart_str[limb_num - 1] * 2 + 55, 0, 0))
     avg_color = '#%02x%02x%02x' % ((sum(body_color[0])/(len(body_color[0]))), (sum(body_color[1])/(len(body_color[1]))), (sum(body_color[2])/(len(body_color[2]))))
-    window.create_oval(body_anchor[0] + width[0], body_anchor[1] + width[0], body_anchor[0] - width[0], body_anchor[1] - width[0], fill= avg_color, outline= avg_color)
+    window.create_oval(body_anchor[0] + width[0] * 1.5, body_anchor[1] + width[0] * 1.5, body_anchor[0] - width[0] * 1.5, body_anchor[1] - width[0] * 1.5, fill= avg_color, outline= avg_color)
     
+    
+def draw_moved_creature(bodypart_pos, bodypart_str, distances, width, body_anchor, window, body_color):
+    for limb_num in range(len(bodypart_pos)):
+            if limb_num % 2 == 0 or limb_num == 0:
+                limb_angle = (45*bodypart_pos[limb_num]) - 45
+                random_distance = random.random()
+                limb_x_anchor = body_anchor[0] + ((distances[0] * random_distance)*(math.sin((math.pi/180)*limb_angle)))
+                limb_y_anchor = body_anchor[1] + ((distances[0] * random_distance)*(math.sin((math.pi/180)*(limb_angle - 90))))
+                limb_color = '#%02x%02x%02x' % (bodypart_str[limb_num] * 2 + 55, 0, 0)
+                window.create_line(body_anchor[0], body_anchor[1], limb_x_anchor, limb_y_anchor, width= width[0] + 1, fill= '#%02x%02x%02x' % (255,255,255))
+                window.create_line(body_anchor[0], body_anchor[1], limb_x_anchor, limb_y_anchor, width= width[0] + 1, fill= limb_color)
+            else:
+                for appendage_num in range(len(bodypart_pos[limb_num])):
+                    if appendage_num % 2 == 0 or appendage_num == 0:
+                        appendage_angle = random.randint(1,360)
+                        appendage_x_anchor = limb_x_anchor + (distances[1]*(math.sin((math.pi/180)*(appendage_angle))))
+                        appendage_y_anchor = limb_y_anchor + (distances[1]*(math.sin((math.pi/180)*(appendage_angle - 90))))
+                        appendage_color = '#%02x%02x%02x' % (0, bodypart_str[limb_num][appendage_num] * 2 + 55, 0)
+                        window.create_line(limb_x_anchor,limb_y_anchor,appendage_x_anchor,appendage_y_anchor,width= width[1] + 1, fill= '#%02x%02x%02x' % (255,255,255))
+                        window.create_line(limb_x_anchor,limb_y_anchor,appendage_x_anchor,appendage_y_anchor,width= width[1] + 1, fill= appendage_color)
+                    else:
+                        for phalange_num in range(len(bodypart_pos[limb_num][appendage_num])):
+                            phalange_angle = random.randint(1,360)
+                            phalange_x_anchor = appendage_x_anchor + (distances[2]*(math.sin((math.pi/180)*(phalange_angle))))
+                            phalange_y_anchor = appendage_y_anchor + (distances[2]*(math.sin((math.pi/180)*(phalange_angle - 90))))
+                            phalange_color = '#%02x%02x%02x' % ((0, 0, bodypart_str[limb_num][appendage_num][phalange_num] * 2 + 55))
+                            window.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= width[2] + 1, fill= '#%02x%02x%02x' % (255,255,255))
+                            window.create_line(appendage_x_anchor,appendage_y_anchor,phalange_x_anchor,phalange_y_anchor,width= width[2] + 1, fill= phalange_color)
+                            window.create_oval(phalange_x_anchor + (width[2]/2) - 1, phalange_y_anchor + (width[2]/2) - 1, phalange_x_anchor - (width[2]/2) + 1, phalange_y_anchor - (width[2]/2) + 1, fill= phalange_color, outline= phalange_color)
+                        window.create_oval([appendage_x_anchor + (width[1]/2)], [appendage_y_anchor + (width[1]/2)], [appendage_x_anchor - (width[1]/2)], [appendage_y_anchor - (width[1]/2)], fill= appendage_color, outline= appendage_color)
+                window.create_oval([limb_x_anchor + (width[0]/2)], [limb_y_anchor + (width[0]/2)], [limb_x_anchor - (width[0]/2)], [limb_y_anchor - (width[0]/2)], fill=  '#%02x%02x%02x' % (bodypart_str[limb_num - 1] * 2 + 55, 0, 0), outline= '#%02x%02x%02x' % (bodypart_str[limb_num - 1] * 2 + 55, 0, 0))
+    avg_color = '#%02x%02x%02x' % ((sum(body_color[0])/(len(body_color[0]))), (sum(body_color[1])/(len(body_color[1]))), (sum(body_color[2])/(len(body_color[2]))))
+    window.create_oval(body_anchor[0] + width[0] * 1.5, body_anchor[1] + width[0] * 1.5, body_anchor[0] - width[0] * 1.5, body_anchor[1] - width[0] * 1.5, fill= avg_color, outline= avg_color)
+
 
 def collect_creature_number():
     try:
@@ -244,7 +281,7 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
         avail_limb_pos.remove(pos)
         limb_list.append(pos)
         limb_str_list.append(str)
-        limb_color_avg.append((.011 * (str**2)) + (.9*str))
+        limb_color_avg.append(2.4 * str + 15)
         appendage_list= []
         appendage_str_list = []
         avail_appendage_pos = range(1, 4)
@@ -254,7 +291,7 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
             avail_appendage_pos.remove(pos)
             appendage_list.append(pos)
             appendage_str_list.append(str)
-            appendage_color_avg.append((.011 * (str**2)) + (.9*str))
+            appendage_color_avg.append(2.4 * str + 5)
             phalange_list = []
             phalange_str_list = []
             avail_phalange_pos = range(1, 6)
@@ -264,7 +301,7 @@ def creature_creation(min_limb_str, max_limb_str, min_limb, max_limb, min_append
                 avail_phalange_pos.remove(pos)
                 phalange_list.append(pos)
                 phalange_str_list.append(str)
-                phalange_color_avg.append((.011 * (str**2)) + (.9*str))
+                phalange_color_avg.append(2.4 * str + 5)
             appendage_list.append(phalange_list)    # Adds phalanges inside of appendage list
             appendage_str_list.append(phalange_str_list)    # Same for strengths
         limb_list.append(appendage_list)    # Adds appendages and phalanges inside of limb list
@@ -307,6 +344,31 @@ class Creature():
         draw_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window, body_color)
         mainloop()
         
+    def create_moved(self):
+        root = tk.Tk()
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight() - 50
+        window = Canvas(Tk(), width= screen_width, height= screen_height,background= "black")
+        window.pack()
+        mover = screen_width/2
+        body_x_anchor = screen_width /2
+        body_y_anchor = screen_height / 2
+        limb_distance = mover/4
+        appendage_distance = limb_distance/2
+        phalange_distance = limb_distance/6
+        limb_width = limb_distance/10
+        appendage_width = limb_width/2
+        phalange_width = appendage_width/2
+        if raw_input('Would You Like To Customize Limits? ') == 'Yes':
+            max_min_values = create_creature()
+        else:
+            max_min_values = (0,100,1,8,0,100,1,3,0,100,1,5)
+        values = creature_creation(max_min_values[0], max_min_values[1], max_min_values[2], max_min_values[3], max_min_values[4], max_min_values[5], max_min_values[6], max_min_values[7], max_min_values[8], max_min_values[9], max_min_values[10], max_min_values[11],)
+        limb_list = values[0]
+        limb_str_list = values[1]
+        body_color = values[2]
+        draw_moved_creature(limb_list, limb_str_list, (limb_distance, appendage_distance, phalange_distance), (limb_width, appendage_width, phalange_width),(body_x_anchor, body_y_anchor), window, body_color)
+        mainloop()
         
     def create_multiple(self):
         root = tk.Tk()
