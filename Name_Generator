@@ -1,0 +1,67 @@
+import random
+def gen_name():
+    name = ''
+    cons = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z','y']
+    h_cons = ['c','t','s','p']
+    l_cons = ['c','b','f','g','p','s']
+    r_cons = ['b','c','f','g','p','t','w']
+    vowels = ['a','e','i','o','u']
+    if random.randint(1,5) == 1:
+        letter = random.choice(vowels)
+    else:
+        letter = random.choice(cons)
+    name += letter
+    for i in range(random.randint(4,7)):
+        if name[-1] not in vowels:
+            if name[-1] not in h_cons:
+                if name[-1] not in l_cons:
+                    if name[-1] not in r_cons:
+                        name += random.choice(vowels)
+                    else:
+                        if random.randint(1,5) == 1:    
+                            name += 'r'
+                        else:
+                            name += random.choice(vowels)
+                else:
+                    if name[-1] in r_cons:
+                        if random.randint(1,5) == 1:
+                            name += 'r'
+                        elif random.randint(1,5) == 1:
+                            name += 'l'
+                        else:
+                            name += random.choice(vowels)
+                    else:
+                        if random.randint(1,5) == 1:
+                            name += 'l'
+                        else:
+                            name += random.choice(vowels)
+            else:        
+                if random.randint(1,5) == 1:
+                    name += 'h'
+                else:
+                    if name[-1] in r_cons:
+                        if name[-1] in l_cons:
+                            if random.randint(1,5) == 1:
+                                name += 'l'
+                            else:
+                                name += random.choice(vowels)
+                        if random.randint(1,5) == 1:
+                            name += 'r'
+                        else:
+                            name += random.choice(vowels)
+                    else:
+                        if name[-1] in l_cons:
+                            if random.randint(1,5) == 1:
+                                name += 'l'
+                            else:
+                                name += random.choice(vowels)
+        else:
+            if name[-1] in 'eo':
+                if name[-1] != name[-2]:
+                    if random.randint(1,5) == 1:
+                        name += name[-1]
+                    else:
+                        name += random.choice(cons)
+            else:
+                name += random.choice(cons)
+    return name
