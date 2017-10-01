@@ -317,6 +317,7 @@ class Creature():
         
     def help(self):
         print ('This is the help tab, list of commands and what they do can be found here')
+        print "There are 3 commands, create(), createMoved(), and createMultiple()"
         
     def create(self):
         root = tk.Tk()
@@ -402,3 +403,4 @@ class Creature():
             bodyColor = values[3]
             drawCreature(limbList, limbStrList, (limbDistance, appendageDistance, phalangeDistance), (limbWidth, appendageWidth, phalangeWidth),(bodyXAnchor, bodyYAnchor), window, bodyColor)
         mainloop()
+print "Welcome to the evolution simulator, enter 'A Name' = Creature() to start"
