@@ -378,9 +378,9 @@ class Creature():
         window = Canvas(Tk(), width= screenWidth, height= screenHeight,background= "black")
         window.pack()
         creatureNumber = collectCreatureNumber()
-        mover = screenWidth/(creatureNumber*2)
-        bodyXAnchor = mover
-        bodyYAnchor = screenHeight - mover
+        mover = screenWidth/(-16.82583717 + (8.53116841*(math.log(creatureNumber))))
+        bodyXAnchor = 0
+        bodyYAnchor = mover/2
         limbDistance = mover/4
         appendageDistance = limbDistance/2
         phalangeDistance = limbDistance/6
@@ -398,9 +398,9 @@ class Creature():
                 bodyXAnchor = mover
                 bodyYAnchor += mover
             values = creatureCreation(maxMinValues[0], maxMinValues[1], maxMinValues[2], maxMinValues[3], maxMinValues[4], maxMinValues[5], maxMinValues[6], maxMinValues[7], maxMinValues[8], maxMinValues[9], maxMinValues[10], maxMinValues[11],)
-            limbList = values[1]
-            limbStrList = values[2]
-            bodyColor = values[3]
+            limbList = values[0]
+            limbStrList = values[1]
+            bodyColor = values[2]
             drawCreature(limbList, limbStrList, (limbDistance, appendageDistance, phalangeDistance), (limbWidth, appendageWidth, phalangeWidth),(bodyXAnchor, bodyYAnchor), window, bodyColor)
         mainloop()
 print "Welcome to the evolution simulator, enter 'A Name' = Creature() to start"
